@@ -417,7 +417,11 @@ int alsa_device_init(alsa_device_t *adev) {
          adev->handle);
 
   /* pcm hwparams */
-  if (snd_pcm_hw_params_malloc(&hwparams) < 0) goto err1;
+  if (snd_pcm_hw_params_malloc(&hwparams) < 0) {
+    r = -ENOMEM;
+    snd_pcm_close(adev->handle);
+    goto err1;
+  }
 
   r = set_hwparams(adev, hwparams, SND_PCM_ACCESS_RW_INTERLEAVED);
   if (r < 0) {
@@ -426,7 +430,10 @@ int alsa_device_init(alsa_device_t *adev) {
   }
 
   /* pcm swparams */
-  if (snd_pcm_sw_params_malloc(&swparams) < 0) goto err2;
+  if (snd_pcm_sw_params_malloc(&swparams) < 0) {
+    r = -ENOMEM;
+    goto err2;
+  }
 
   r = set_swparams(adev, swparams);
   if (r < 0) {
