@@ -33,14 +33,15 @@
 
 ### 1. 下载资源包
 
+- 编译时会自动下载资源包，如果想手动下载资源包，可以使用下面命令将资源包下载到项目根目录，再进行编译
+
 ```bash
 wget https://archive.d-robotics.cc/TogetheROS/files/speech_solution/speech_agent_audio/speech_agent_audio_v1.0.0.tar.gz
-tar -zxvf speech_agent_audio_v1.0.0.tar.gz -C /opt/tros/humble/lib/
 ```
 
 ### 2. 命令词配置
 
-命令词定义在 `cmd_word.json` 文件中，默认为：
+命令词定义在 `/opt/tros/humble/lib/speech_agent_audio/res/cmd_word/cmd_word.json` 文件中，默认为：
 
 ```json
 {
@@ -86,6 +87,9 @@ ros2 launch speech_agent_audio speech_agent_audio.launch.py
 
 # 6mic
 ros2 launch speech_agent_audio speech_agent_audio.launch.py mic_type:=6mic
+
+# 同时启动audio、asr和tts, 脚本使用示例
+ros2 launch speech_agent_audio speech_agent.launch.py asr_pub_topic:=/prompt_text 
 ```
 
 ### 5. 结果验证
@@ -156,10 +160,9 @@ ros2 launch speech_agent_audio speech_agent_audio.launch.py mic_type:=6mic
    - 使用 `arecord -l` 查看可用音频设备
 
 2. 4mic 和 6mic 有什么区别？
-   - 4mic：麦克风采集 8 通道音频，重映射为 6 通道后送入 VTN 引擎
-   - 6mic：麦克风采集 8 通道音频，直接送入 VTN 引擎（不做通道重映射）
+   - 4mic：使用线性4mic音频板采集 8 通道音频，重映射为 6 通道后送入 VTN 引擎
+   - 6mic：使用环形6mic音频板采集 8 通道音频，直接送入 VTN 引擎（不做通道重映射）
 
 3. 唤醒词不生效？
    - 确认 VTN 引擎初始化成功（日志中应有 "speech engine init success"）
-   - 确认认证信息正确
    - 确认 vtn.ini 配置文件存在
