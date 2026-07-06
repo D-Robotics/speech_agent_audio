@@ -109,7 +109,7 @@ After launching, the following terminal output indicates successful audio device
 After speaking the wake-up word, you should see the wake-up event being published:
 
 ```text
-[WARN] [speech_agent_audio]: wakeup word:你好你好
+[WARN] [speech_agent_audio]: wakeup word:tu3-dou4-tu3-dou4
 ```
 
 After speaking a command word, you should see the command word recognition result:

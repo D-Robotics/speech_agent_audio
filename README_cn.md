@@ -109,7 +109,7 @@ ros2 launch speech_agent_audio speech_agent.launch.py asr_pub_topic:=/prompt_tex
 说唤醒词后，可观察到唤醒事件发布：
 
 ```text
-[WARN] [speech_agent_audio]: wakeup word:你好你好
+[WARN] [speech_agent_audio]: wakeup word:tu3-dou4-tu3-dou4
 ```
 
 说命令词后，可观察到命令词识别结果：
