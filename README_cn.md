@@ -81,6 +81,11 @@ colcon build --packages-select speech_agent_audio
 
 ### 4. 启动
 
+将资源包放到`/opt/tros/humble/lib/`目录下
+```bash
+cp -r install/speech_agent_audio/lib/speech_agent_audio/ /opt/tros/humble/lib/
+```
+
 ```bash
 # 4mic(默认)
 ros2 launch speech_agent_audio speech_agent_audio.launch.py
