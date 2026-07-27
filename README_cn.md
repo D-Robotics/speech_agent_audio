@@ -74,6 +74,8 @@ wget https://archive.d-robotics.cc/TogetheROS/files/speech_solution/speech_agent
 
 ### 3. 编译
 
+`<TROS_DISTRO>` 为当前启用的 TROS 发行版 —— `humble` 或 `jazzy`，请替换为实际安装并 source 的发行版。
+
 ```bash
 source /opt/tros/<TROS_DISTRO>/setup.bash
 colcon build --packages-select speech_agent_audio
@@ -81,12 +83,10 @@ colcon build --packages-select speech_agent_audio
 
 ### 4. 启动
 
-将资源包放到`/opt/tros/<TROS_DISTRO>/lib/`目录下
+将资源包放到`/opt/tros/${TROS_DISTRO}/lib/`目录下
 ```bash
-cp -r install/speech_agent_audio/lib/speech_agent_audio/ /opt/tros/<TROS_DISTRO>/lib/
+cp -r install/speech_agent_audio/lib/speech_agent_audio/ /opt/tros/${TROS_DISTRO}/lib/
 ```
-
-> `<TROS_DISTRO>` 为当前启用的 TROS 发行版 —— `humble` 或 `jazzy`，请替换为实际安装并 source 的发行版。
 
 ```bash
 # 4mic(默认)

@@ -74,6 +74,8 @@ Command words are defined in `/opt/tros/<TROS_DISTRO>/lib/speech_agent_audio/res
 
 ### 3. Build
 
+`<TROS_DISTRO>` is the active TROS distribution — `humble` or `jazzy`. Replace it with the distro you have installed and sourced.
+
 ```bash
 source /opt/tros/<TROS_DISTRO>/setup.bash
 colcon build --packages-select speech_agent_audio
@@ -81,12 +83,10 @@ colcon build --packages-select speech_agent_audio
 
 ### 4. Launch
 
-Place resource package in `/opt/tros/<TROS_DISTRO>/lib/`
+Place resource package in `/opt/tros/${TROS_DISTRO}/lib/`
 ```bash
-cp -r install/speech_agent_audio/lib/speech_agent_audio/ /opt/tros/<TROS_DISTRO>/lib/
+cp -r install/speech_agent_audio/lib/speech_agent_audio/ /opt/tros/${TROS_DISTRO}/lib/
 ```
-
-> `<TROS_DISTRO>` is the active TROS distribution — `humble` or `jazzy`. Replace it with the distro you have installed and sourced.
 
 ```bash
 # 4mic (default)
