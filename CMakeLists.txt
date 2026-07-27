@@ -91,10 +91,10 @@ target_include_directories(${PROJECT_NAME} PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>)
 
-set(TAR_FILE "${CMAKE_SOURCE_DIR}/speech_agent_audio_v1.0.0.tar.gz")
+set(TAR_FILE "${CMAKE_SOURCE_DIR}/speech_agent_audio_v1.1.0.tar.gz")
 if (NOT EXISTS "${TAR_FILE}")
   execute_process(
-    COMMAND wget https://archive.d-robotics.cc/TogetheROS/files/speech_solution/speech_agent_audio/speech_agent_audio_v1.0.0.tar.gz
+    COMMAND wget https://archive.d-robotics.cc/TogetheROS/files/speech_solution/speech_agent_audio/speech_agent_audio_v1.1.0.tar.gz
               -O ${TAR_FILE}
     WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
     ERROR_VARIABLE wget_error

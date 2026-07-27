@@ -36,12 +36,12 @@
 - 编译时会自动下载资源包，如果想手动下载资源包，可以使用下面命令将资源包下载到项目根目录，再进行编译
 
 ```bash
-wget https://archive.d-robotics.cc/TogetheROS/files/speech_solution/speech_agent_audio/speech_agent_audio_v1.0.0.tar.gz
+wget https://archive.d-robotics.cc/TogetheROS/files/speech_solution/speech_agent_audio/speech_agent_audio_v1.1.0.tar.gz
 ```
 
 ### 2. 命令词配置
 
-命令词定义在 `/opt/tros/humble/lib/speech_agent_audio/res/cmd_word/cmd_word.json` 文件中，默认为：
+命令词定义在 `/opt/tros/<TROS_DISTRO>/lib/speech_agent_audio/res/cmd_word/cmd_word.json` 文件中（`<TROS_DISTRO>` 为当前启用的 TROS 发行版，如 `humble` 或 `jazzy`，由 `setup.bash` 自动导出），默认为：
 
 ```json
 {
@@ -75,16 +75,18 @@ wget https://archive.d-robotics.cc/TogetheROS/files/speech_solution/speech_agent
 ### 3. 编译
 
 ```bash
-source /opt/tros/humble/setup.bash
+source /opt/tros/<TROS_DISTRO>/setup.bash
 colcon build --packages-select speech_agent_audio
 ```
 
 ### 4. 启动
 
-将资源包放到`/opt/tros/humble/lib/`目录下
+将资源包放到`/opt/tros/<TROS_DISTRO>/lib/`目录下
 ```bash
-cp -r install/speech_agent_audio/lib/speech_agent_audio/ /opt/tros/humble/lib/
+cp -r install/speech_agent_audio/lib/speech_agent_audio/ /opt/tros/<TROS_DISTRO>/lib/
 ```
+
+> `<TROS_DISTRO>` 为当前启用的 TROS 发行版 —— `humble` 或 `jazzy`，请替换为实际安装并 source 的发行版。
 
 ```bash
 # 4mic(默认)

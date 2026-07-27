@@ -36,12 +36,12 @@ Microphone Array (8ch, 16kHz, S16_LE)
 The resource package is downloaded automatically during compilation. To download it manually, use the following command to download it to the project root directory before compiling:
 
 ```bash
-wget https://archive.d-robotics.cc/TogetheROS/files/speech_solution/speech_agent_audio/speech_agent_audio_v1.0.0.tar.gz
+wget https://archive.d-robotics.cc/TogetheROS/files/speech_solution/speech_agent_audio/speech_agent_audio_v1.1.0.tar.gz
 ```
 
 ### 2. Command Word Configuration
 
-Command words are defined in `/opt/tros/humble/lib/speech_agent_audio/res/cmd_word/cmd_word.json`. The default configuration is:
+Command words are defined in `/opt/tros/<TROS_DISTRO>/lib/speech_agent_audio/res/cmd_word/cmd_word.json` (where `<TROS_DISTRO>` is the active TROS distro, e.g. `humble` or `jazzy`, exported by `setup.bash`). The default configuration is:
 
 ```json
 {
@@ -75,16 +75,18 @@ Command words are defined in `/opt/tros/humble/lib/speech_agent_audio/res/cmd_wo
 ### 3. Build
 
 ```bash
-source /opt/tros/humble/setup.bash
+source /opt/tros/<TROS_DISTRO>/setup.bash
 colcon build --packages-select speech_agent_audio
 ```
 
 ### 4. Launch
 
-Place resource package in `/opt/tros/humble/lib/`
+Place resource package in `/opt/tros/<TROS_DISTRO>/lib/`
 ```bash
-cp -r install/speech_agent_audio/lib/speech_agent_audio/ /opt/tros/humble/lib/
+cp -r install/speech_agent_audio/lib/speech_agent_audio/ /opt/tros/<TROS_DISTRO>/lib/
 ```
+
+> `<TROS_DISTRO>` is the active TROS distribution — `humble` or `jazzy`. Replace it with the distro you have installed and sourced.
 
 ```bash
 # 4mic (default)
