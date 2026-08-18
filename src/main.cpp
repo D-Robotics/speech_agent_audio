@@ -20,7 +20,7 @@
 
 int main(int argc, char** argv) {
   rclcpp::init(argc, argv);
-  RCLCPP_WARN(rclcpp::get_logger("speech_agent_audio"),
+  RCLCPP_INFO(rclcpp::get_logger("speech_agent_audio"),
               "This is speech agent audio example!");
 
   std::string node_name = "speech_agent_audio";

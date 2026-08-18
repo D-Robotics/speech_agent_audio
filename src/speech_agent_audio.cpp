@@ -49,7 +49,6 @@ SpeechAgentAudioNode::SpeechAgentAudioNode(const std::string &node_name,
       = std::string(std::getenv("TROS_DISTRO")? std::getenv("TROS_DISTRO") : "");
   cfg_root_path_ = "/opt/tros/" + tros_distro + speech_res_path_;
 
-  this->declare_parameter<int>("push_wakeup", push_wakeup_);
   this->declare_parameter<int>("vad_eos_timeout", vad_eos_timeout_);
   this->declare_parameter<std::string>("micphone_name", micphone_name_);
   this->declare_parameter<std::string>("mic_type", mic_type_);
@@ -59,7 +58,6 @@ SpeechAgentAudioNode::SpeechAgentAudioNode(const std::string &node_name,
   this->declare_parameter<std::string>("asr_pub_topic_name", asr_pub_topic_name_);
   this->declare_parameter<std::string>("vad_pub_topic_name", vad_pub_topic_name_);
 
-  this->get_parameter<int>("push_wakeup", push_wakeup_);
   this->get_parameter<int>("vad_eos_timeout", vad_eos_timeout_);
   this->get_parameter<std::string>("micphone_name", micphone_name_);
   this->get_parameter<std::string>("mic_type", mic_type_);
@@ -78,7 +76,6 @@ SpeechAgentAudioNode::SpeechAgentAudioNode(const std::string &node_name,
      << "\n cmd_pub_topic_name: " << cmd_pub_topic_name_
      << "\n asr_pub_topic_name: " << asr_pub_topic_name_
      << "\n vad_pub_topic_name: " << vad_pub_topic_name_
-     << "\n push_wakeup: " << push_wakeup_
      << "\n vad_eos_timeout: " << vad_eos_timeout_;
   RCLCPP_WARN(rclcpp::get_logger("speech_agent_audio"), "%s", ss.str().c_str());
 
@@ -430,7 +427,6 @@ void SpeechAgentAudioNode::MicphoneGetThread() {
   if (is_4mic) {
     buffer_remapped = new char[vtn_input_size];
   }
-  RCLCPP_ERROR(rclcpp::get_logger("speech_agent_audio"), ">>> mic type:[%s]", mic_type_.c_str());
   while (rclcpp::ok()) {
     ret = alsa_device_read(micphone_device_, buffer, frames);
     RCLCPP_DEBUG(rclcpp::get_logger("speech_agent_audio"), "alsa_device_read:%d", ret);

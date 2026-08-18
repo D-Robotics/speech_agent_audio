@@ -148,7 +148,6 @@ After speaking a command word, you should see the command word recognition resul
 | cmd_pub_topic_name | string | Command word result publish topic | No | Configure as needed | /audio_smart |
 | asr_pub_topic_name | string | ASR audio data publish topic | No | Configure as needed | /asr_data |
 | vad_pub_topic_name | string | VAD data publish topic | No | Configure as needed | /vad_data |
-| push_wakeup | int | Whether to push wake-up word prefix | No | 0, 1 | 0 |
 | vad_eos_timeout | int | VAD end-of-speech timeout (ms) | No | Configure as needed | 500 |
 
 ## Runtime Dependencies

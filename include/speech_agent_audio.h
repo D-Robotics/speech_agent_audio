@@ -82,7 +82,6 @@ class SpeechAgentAudioNode : public rclcpp::Node {
   int micphone_buffer_time_ = 0;
   int micphone_nperiods_ = 4;
   int micphone_period_size_ = 1024;
-  int push_wakeup_ = 0;
   int vad_eos_timeout_ = 500;
   proc_vtn_api_interact proc_interact_ = nullptr;
   std::atomic<bool> is_vad_flag_ = false;

@@ -14,7 +14,7 @@
 # limitations under the License.
 
 from launch import LaunchDescription
-from launch.actions import ExecuteProcess, DeclareLaunchArgument
+from launch.actions import ExecuteProcess, DeclareLaunchArgument, LogInfo
 from launch.substitutions import LaunchConfiguration
 from ament_index_python.packages import get_package_share_directory
 
@@ -27,7 +27,6 @@ def generate_launch_description():
 
     micphone_name = LaunchConfiguration('micphone_name')
     mic_type = LaunchConfiguration('mic_type')
-    push_wakeup = LaunchConfiguration('push_wakeup')
     vad_eos_timeout = LaunchConfiguration('vad_eos_timeout')
     wkp_topic = LaunchConfiguration('wkp_topic')
     doa_topic = LaunchConfiguration('doa_topic')
@@ -42,9 +41,6 @@ def generate_launch_description():
         DeclareLaunchArgument(
             'mic_type', default_value='4mic',
             description='mic type: [4mic, 6mic]'),
-        DeclareLaunchArgument(
-            'push_wakeup', default_value='0',
-            description='push wakeup_name before asr data'),
         DeclareLaunchArgument(
             'vad_eos_timeout', default_value='500',
             description='vad eos timeout (ms)'),
@@ -64,6 +60,44 @@ def generate_launch_description():
             'vad_topic', default_value='/vad_data',
             description='VAD data publish topic'),
 
+        LogInfo(
+            msg=["\n",
+                 "========== speech_agent_audio.launch.py usage ==========\n",
+                 "usage:\n",
+                 "  ros2 launch speech_agent_audio speech_agent_audio.launch.py ",
+                 "[<argument_name>:=<value> ...]\n",
+                 "\n",
+                 "arguments (all optional, pass as <name>:=<value>):\n",
+                 "  micphone_name    audio capture device,              default: 'plughw:0,1'\n",
+                 "  mic_type         mic type: [4mic, 6mic],            default: '4mic'\n",
+                 "  vad_eos_timeout  vad eos timeout (ms),              default: '500'\n",
+                 "  wkp_topic        wakeup event publish topic,        default: '/wkp_text'\n",
+                 "  doa_topic        DOA result publish topic,          default: '/doa_data'\n",
+                 "  cmd_topic        command word result publish topic, default: '/audio_smart'\n",
+                 "  asr_audio_topic  audio data for ASR,                default: '/asr_data'\n",
+                 "  vad_topic        VAD data publish topic,            default: '/vad_data'\n",
+                 "\n",
+                 "examples:\n",
+                 "  # launch with all default values\n",
+                 "  ros2 launch speech_agent_audio speech_agent_audio.launch.py\n",
+                 "  # launch with 6-mic configuration\n",
+                 "  ros2 launch speech_agent_audio speech_agent_audio.launch.py ",
+                 "mic_type:=6mic\n",
+                 "  # launch with capture device\n",
+                 "  ros2 launch speech_agent_audio speech_agent_audio.launch.py ",
+                 "micphone_name:=plughw:0,1\n",
+                 "\n",
+                 "current values:\n",
+                 "  micphone_name=", micphone_name, "\n",
+                 "  mic_type=", mic_type, "\n",
+                 "  vad_eos_timeout=", vad_eos_timeout, "\n",
+                 "  wkp_topic=", wkp_topic, "\n",
+                 "  doa_topic=", doa_topic, "\n",
+                 "  cmd_topic=", cmd_topic, "\n",
+                 "  asr_audio_topic=", asr_audio_topic, "\n",
+                 "  vad_topic=", vad_topic, "\n",
+                 "=======================================================\n"]),
+
         ExecuteProcess(
             cmd=['bash', '-c',
                  'source ' + setup_env + ' && '
@@ -71,17 +105,15 @@ def generate_launch_description():
                  '--ros-args --log-level warn '
                  '-p micphone_name:="$1" '
                  '-p mic_type:="$2" '
-                 '-p push_wakeup:="$3" '
-                 '-p vad_eos_timeout:="$4" '
-                 '-p wkp_event_pub_topic_name:="$5" '
-                 '-p doa_pub_topic_name:="$6" '
-                 '-p cmd_pub_topic_name:="$7" '
-                 '-p asr_pub_topic_name:="$8" '
-                 '-p vad_pub_topic_name:="$9"',
+                 '-p vad_eos_timeout:="$3" '
+                 '-p wkp_event_pub_topic_name:="$4" '
+                 '-p doa_pub_topic_name:="$5" '
+                 '-p cmd_pub_topic_name:="$6" '
+                 '-p asr_pub_topic_name:="$7" '
+                 '-p vad_pub_topic_name:="$8"',
                  'bash',
                  micphone_name,
                  mic_type,
-                 push_wakeup,
                  vad_eos_timeout,
                  wkp_topic,
                  doa_topic,

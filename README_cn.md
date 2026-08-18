@@ -148,7 +148,6 @@ ros2 launch speech_agent_audio speech_agent.launch.py asr_pub_topic:=/prompt_tex
 | cmd_pub_topic_name | string | 命令词结果发布话题 | 否 | 根据实际情况配置 | /audio_smart |
 | asr_pub_topic_name | string | ASR 音频数据发布话题 | 否 | 根据实际情况配置 | /asr_data |
 | vad_pub_topic_name | string | VAD 数据发布话题 | 否 | 根据实际情况配置 | /vad_data |
-| push_wakeup | int | 是否推送唤醒词前缀 | 否 | 0, 1 | 0 |
 | vad_eos_timeout | int | VAD 尾点超时时间 (ms) | 否 | 根据实际情况配置 | 500 |
 
 ## 运行依赖
