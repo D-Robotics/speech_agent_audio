@@ -82,9 +82,10 @@ class SpeechAgentAudioNode : public rclcpp::Node {
   int micphone_buffer_time_ = 0;
   int micphone_nperiods_ = 4;
   int micphone_period_size_ = 1024;
-  int vad_eos_timeout_ = 500;
+  int vad_eos_timeout_ = 700;
   proc_vtn_api_interact proc_interact_ = nullptr;
   std::atomic<bool> is_vad_flag_ = false;
+  std::atomic<bool> vad_begin_sent_ = false;
   std::string cfg_root_path_;
   std::set<std::string> cmd_words_;
   std::string speech_res_path_ = "/lib/speech_agent_audio/";

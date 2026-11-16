@@ -42,7 +42,7 @@ def generate_launch_description():
             'mic_type', default_value='4mic',
             description='mic type: [4mic, 6mic]'),
         DeclareLaunchArgument(
-            'vad_eos_timeout', default_value='500',
+            'vad_eos_timeout', default_value='700',
             description='vad eos timeout (ms)'),
         DeclareLaunchArgument(
             'wkp_topic', default_value='/wkp_text',
@@ -70,7 +70,7 @@ def generate_launch_description():
                  "arguments (all optional, pass as <name>:=<value>):\n",
                  "  micphone_name    audio capture device,              default: 'plughw:0,1'\n",
                  "  mic_type         mic type: [4mic, 6mic],            default: '4mic'\n",
-                 "  vad_eos_timeout  vad eos timeout (ms),              default: '500'\n",
+                 "  vad_eos_timeout  vad eos timeout (ms),              default: '700'\n",
                  "  wkp_topic        wakeup event publish topic,        default: '/wkp_text'\n",
                  "  doa_topic        DOA result publish topic,          default: '/doa_data'\n",
                  "  cmd_topic        command word result publish topic, default: '/audio_smart'\n",

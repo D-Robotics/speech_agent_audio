@@ -519,8 +519,9 @@ void SpeechAgentAudioNode::ParseWakeupEvent(const char *info, void *user_data) {
       self->cmd_publisher_->publish(std::move(cmd_msg));
       RCLCPP_WARN(rclcpp::get_logger("speech_agent_audio"), "cmd word:%s", keyword.c_str());
     } else {
-      // 重置VAD状态
+      // 重置VAD状态, 开启新一轮对话
       self->is_vad_flag_ = true;
+      self->vad_begin_sent_ = false;
       VADReset(self->vad_handle_);
       // 发送主唤醒事件
       auto wkp_msg = std::make_unique<std_msgs::msg::String>();
@@ -585,21 +586,33 @@ void SpeechAgentAudioNode::VadCallback(int status, const char* audio, int aLen, 
   audio_msg::msg::SmartAudioData::UniquePtr vad_msg(new audio_msg::msg::SmartAudioData());
   vad_msg->frame_type.value = vad_msg->frame_type.SMART_AUDIO_TYPE_EVENT;
   if (status == VAD_STATUS_FIND_BOS) {
-    vad_msg->event_type.value = vad_msg->event_type.EVENT_VADBEGIN;
-    RCLCPP_WARN(rclcpp::get_logger("speech_agent_audio"), "vad begin");
+    if (!self->vad_begin_sent_) {
+      // 本轮对话的第一次BOS，发布EVENT_VADBEGIN
+      self->vad_begin_sent_ = true;
+      vad_msg->event_type.value = vad_msg->event_type.EVENT_VADBEGIN;
+      RCLCPP_WARN(rclcpp::get_logger("speech_agent_audio"), "vad begin");
+    } else {
+      // 停顿后恢复说话触发的新BOS，降级为EVENT_VADMID
+      vad_msg->event_type.value = vad_msg->event_type.EVENT_VADMID;
+      RCLCPP_WARN(rclcpp::get_logger("speech_agent_audio"), "vad continue (bos after pause)");
+    }
   } else if (status == VAD_STATUS_CONTINUOUS) {
     vad_msg->event_type.value = vad_msg->event_type.EVENT_VADMID;
   } else if (status == VAD_STATUS_FIND_EOS) {
-    vad_msg->event_type.value = vad_msg->event_type.EVENT_VADEND;
-    self->is_vad_flag_ = false;
-    RCLCPP_WARN(rclcpp::get_logger("speech_agent_audio"), "vad end");
+    // EOS只表示句中出现一个停顿，不是整句结束
+    vad_msg->event_type.value = vad_msg->event_type.EVENT_VADMID;
+    RCLCPP_WARN(rclcpp::get_logger("speech_agent_audio"), "vad pause (eos), keep feeding");
   } else if (status == VAD_STATUS_BOS_TIMEOUT) {
     vad_msg->event_type.value = vad_msg->event_type.EVENT_WAITASRTIMEOUT;
     self->is_vad_flag_ = false;
+    self->vad_begin_sent_ = false;
     RCLCPP_WARN(rclcpp::get_logger("speech_agent_audio"), "wait asr timeout");
   } else if (status == VAD_STATUS_SPEECH_FINISH) {
+    // 整句真正结束
+    vad_msg->event_type.value = vad_msg->event_type.EVENT_VADEND;
     self->is_vad_flag_ = false;
-    RCLCPP_WARN(rclcpp::get_logger("speech_agent_audio"), "vad status speech finish");
+    self->vad_begin_sent_ = false;
+    RCLCPP_WARN(rclcpp::get_logger("speech_agent_audio"), "vad end (speech finish)");
   }
   self->vad_data_publisher_->publish(std::move(vad_msg));
 }
