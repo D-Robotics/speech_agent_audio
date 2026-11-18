@@ -1,5 +1,9 @@
 # Changelog for package speech_agent_audio
 
+tros_1.3.0(2026-11-16)
+------------------
+1. 修复eos timeout设置异常问题
+
 tros_1.2.0(2026-08-17)
 ------------------
 1. 更新launch文件，启动时输出示例日志，并新增启动hobot_llamacpp节点
